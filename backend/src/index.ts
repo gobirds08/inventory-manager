@@ -24,6 +24,7 @@ app.get("/product/:product_id", async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: "Internal Server Error" });
     console.error(`Error retrieving product: ${product_id}`);
+    console.error(e)
   }
 });
 

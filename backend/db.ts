@@ -1,7 +1,13 @@
 import { Pool } from "pg";
 import { dbConfig } from "./config";
 
-const pool = new Pool(dbConfig);
+// const pool = new Pool(dbConfig);
+const pool = new Pool({
+  connectionString: dbConfig.connectionString,
+  ssl: {
+    rejectUnauthorized: false,  // For most cloud providers, this is required
+  },
+})
 
 export const query = async (text: string, params?: any[]) => {
   try {
