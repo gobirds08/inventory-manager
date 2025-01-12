@@ -72,6 +72,65 @@ app.delete("/product/:product_id", async (req, res) => {
   }
 });
 
+
+// Add Category
+app.post("/category", async (req, res) => {
+  const {category_name, description} = req.body;
+  try{
+    const q = `INSERT INTO Categories (category_name, description)
+               VALUES ($1, $2)`;
+    await query(q, [category_name, description])
+    res.json("Success");
+  }catch(e){
+    res.status(500).json({ error: "Internal Server Error" });
+    console.error(`Error adding category: ${category_name}`);
+  }
+});
+
+// Remove Category
+app.delete("/category/:category_id", async (req, res) => {
+  const category_id = req.params.category_id;
+  try {
+    const q = `DELETE FROM Categories
+               WHERE category_id = $1`;
+    await query(q, [category_id]);
+    res.json("Success");
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+    console.error(`Error deleting category: ${category_id}`);
+  }
+});
+
+
+// Add Supplier
+app.post("/supplier", async (req, res) => {
+  const {supplier_name, contact_name, contact_email, contact_phone} = req.body;
+  try{
+    const q = `INSERT INTO Suppliers (supplier_name, contact_name, contact_email, contact_phone)
+               VALUES ($1, $2, $3, $4)`;
+    await query(q, [supplier_name, contact_name, contact_email, contact_phone])
+    res.json("Success");
+  }catch(e){
+    res.status(500).json({ error: "Internal Server Error" });
+    console.error(`Error adding supplier: ${supplier_name}`);
+  }
+});
+
+// Remove Supplier
+app.delete("/supplier/:supplier_id", async (req, res) => {
+  const supplier_id = req.params.supplier_id;
+  try {
+    const q = `DELETE FROM Suppliers
+               WHERE supplier_id = $1`;
+    await query(q, [supplier_id]);
+    res.json("Success");
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+    console.error(`Error deleting supplier: ${supplier_id}`);
+  }
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
