@@ -31,7 +31,7 @@ CREATE TABLE Products (
 -- Table: Customers
 CREATE TABLE Customers (
     customer_id SERIAL PRIMARY KEY,
-    customer_name VARCHAR(100) NOT NULL,
+    customer_name VARCHAR(100),
     contact_email VARCHAR(100),
     contact_phone VARCHAR(20)
 );
@@ -41,7 +41,7 @@ CREATE TABLE Orders (
     order_id SERIAL PRIMARY KEY,
     customer_id INT REFERENCES Customers(customer_id) ON DELETE CASCADE,
     order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    total_amount DECIMAL(10, 2) NOT NULL CHECK (total_amount >= 0)
+    total_amount DECIMAL(10, 2) NOT NULL CHECK (total_amount >= 0) DEFAULT 0
 );
 
 -- Table: OrderDetails

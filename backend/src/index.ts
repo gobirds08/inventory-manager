@@ -73,6 +73,19 @@ app.delete("/product/:product_id", async (req, res) => {
 });
 
 
+// Get All Categories
+app.get("/category", async (req, res) => {
+  try{
+    const q = `SELECT *
+               FROM Categories`;
+    const result = await query(q);
+    res.json(result.rows);
+  }catch(e){
+    res.status(500).json({ error: "Internal Server Error" });
+    console.error(`Error retrieving categories`);
+  }
+});
+
 // Add Category
 app.post("/category", async (req, res) => {
   const {category_name, description} = req.body;
@@ -131,6 +144,67 @@ app.delete("/supplier/:supplier_id", async (req, res) => {
 });
 
 
+// Add Customer
+app.post("/customer", async (req, res) => {
+  const {customer_name, contact_email, contact_phone} = req.body;
+  try{
+    const q = `INSERT INTO Customers (customer_name, contact_email, contact_phone)
+               VALUES ($1, $2, $3)`;
+    await query(q, [customer_name, contact_email, contact_phone])
+    res.json("Success");
+  }catch(e){
+    res.status(500).json({ error: "Internal Server Error" });
+    console.error(`Error adding customer: ${customer_name}`);
+  }
+});
+
+// Update Customer
+app.put("/customer", async (req, res) => {
+  const {customer_id, customer_name, contact_email, contact_phone} = req.body;
+  try{
+    const q = `UPDATE Customers
+               SET customer_name = $1, contact_email = $2, contact_phone = $3
+               WHERE customer_id = $4`;
+    await query(q, [customer_name, contact_email, contact_phone, customer_id])
+    res.json("Success");
+  }catch(e){
+    res.status(500).json({ error: "Internal Server Error" });
+    console.error(`Error updating customer: ${customer_id}`);
+  }
+});
+
+
+// Add Order
+app.post("/order", async (req, res) => {
+  const {customer_id, order_date, total_amount} = req.body;
+  try{
+    const q = `INSERT INTO Orders (customer_id, order_date, total_amount)
+               VALUES ($1, $2, $3)`;
+    await query(q, [customer_id, order_date, total_amount])
+    res.json("Success");
+  }catch(e){
+    res.status(500).json({ error: "Internal Server Error" });
+    console.error(`Error adding order from customer ${customer_id} on ${order_date}`);
+  }
+});
+
+
+// Add OrderDetails
+app.post("/order_details", async (req, res) => {
+  const {order_id, product_id, quantity, price} = req.body;
+  try{
+    const q = `INSERT INTO OrderDetails (order_id, product_id, quantity, price)
+               VALUES ($1, $2, $3, $4)`;
+    await query(q, [order_id, product_id, quantity, price])
+    res.json("Success");
+  }catch(e){
+    res.status(500).json({ error: "Internal Server Error" });
+    console.error(`Error adding order detail from order id: ${order_id} and product id: ${product_id}`);
+  }
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
