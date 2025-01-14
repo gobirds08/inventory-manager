@@ -6,11 +6,6 @@ const PORT = 3001;
 
 app.use(express.json());
 
-//
-app.get("/", async (req, res) => {
-  const result = await query("");
-  res.send("Hello from the backend!");
-});
 
 // Get Product
 app.get("/product/:product_id", async (req, res) => {
@@ -28,8 +23,12 @@ app.get("/product/:product_id", async (req, res) => {
   }
 });
 
-// Add Product
+// Get All Products In A Category
+app.get("/all_products/:category_id", async (req, res) => {
+  const category_id = parseInt(req.params.category_id)
+});
 
+// Add Product
 app.post("/product", async (req, res) => {
   const {
     product_name,
@@ -60,7 +59,7 @@ app.post("/product", async (req, res) => {
 
 // Remove Product
 app.delete("/product/:product_id", async (req, res) => {
-  const product_id = req.params.product_id;
+  const product_id = parseInt(req.params.product_id);
   try {
     const q = `DELETE FROM Products
                WHERE product_id = $1`;
@@ -74,7 +73,7 @@ app.delete("/product/:product_id", async (req, res) => {
 
 
 // Get All Categories
-app.get("/category", async (req, res) => {
+app.get("/category", async (req, res)  => {
   try{
     const q = `SELECT *
                FROM Categories`;
@@ -102,7 +101,7 @@ app.post("/category", async (req, res) => {
 
 // Remove Category
 app.delete("/category/:category_id", async (req, res) => {
-  const category_id = req.params.category_id;
+  const category_id = parseInt(req.params.category_id);
   try {
     const q = `DELETE FROM Categories
                WHERE category_id = $1`;
@@ -114,6 +113,19 @@ app.delete("/category/:category_id", async (req, res) => {
   }
 });
 
+
+// Get All Suppliers
+app.get("/supplier", async (req, res) => {
+  try{
+    const q = `SELECT *
+               FROM Suppliers`;
+    const result = await query(q);
+    res.json(result.rows);
+  }catch(e){
+    res.status(500).json({ error: "Internal Server Error" });
+    console.error(`Error retrieving suppliers`);
+  }
+});
 
 // Add Supplier
 app.post("/supplier", async (req, res) => {
@@ -131,7 +143,7 @@ app.post("/supplier", async (req, res) => {
 
 // Remove Supplier
 app.delete("/supplier/:supplier_id", async (req, res) => {
-  const supplier_id = req.params.supplier_id;
+  const supplier_id = parseInt(req.params.supplier_id);
   try {
     const q = `DELETE FROM Suppliers
                WHERE supplier_id = $1`;
@@ -143,6 +155,29 @@ app.delete("/supplier/:supplier_id", async (req, res) => {
   }
 });
 
+
+// Get Customer(s) From Email Or Phone
+app.get("/customer/:customer_contact", async (req, res) => {
+  let customer_contact : string | number;
+  let query_col : string;
+  try{
+    customer_contact = parseInt(req.params.customer_contact);
+    query_col = "contact_phone"
+  }catch{
+    customer_contact = req.params.customer_contact;
+    query_col = "contact_email"
+  }
+  try{
+    const q = `SELECT *
+               FROM Customers
+               WHERE $1 = $2`;
+    const result = await query(q, [query_col, customer_contact]);
+    res.json(result.rows);
+  }catch(e){
+    res.status(500).json({ error: "Internal Server Error" });
+    console.error(`Error retrieving customer`);
+  }
+});
 
 // Add Customer
 app.post("/customer", async (req, res) => {
@@ -174,6 +209,23 @@ app.put("/customer", async (req, res) => {
 });
 
 
+// Get Most Recent Order For Customer
+app.get("/order/:customer_id", async (req, res) => {
+  const customer_id = parseInt(req.params.customer_id);
+  try{
+    const q = `SELECT *
+               FROM Orders
+               WHERE customer_id = $1
+               ORDER BY order_date DESC
+               LIMIT 1`;
+    const result = await query(q, [customer_id]);
+    res.json(result.rows);  
+  }catch(e){
+    res.status(500).json({ error: "Internal Server Error" });
+    console.error(`Error retrieving customer`);
+  }
+});
+
 // Add Order
 app.post("/order", async (req, res) => {
   const {customer_id, order_date, total_amount} = req.body;
@@ -188,6 +240,21 @@ app.post("/order", async (req, res) => {
   }
 });
 
+
+// Get All OrderDetails For One Order
+app.get("/order_details/:order_id", async (req, res) => {
+  const order_id = parseInt(req.params.order_id);
+  try{
+    const q = `SELECT *
+               FROM OrderDetails
+               WHERE order_id = $1`;
+    const result = await query(q, [order_id]);
+    res.json(result.rows);  
+  }catch(e){
+    res.status(500).json({ error: "Internal Server Error" });
+    console.error(`Error retrieving customer`);
+  }
+});
 
 // Add OrderDetails
 app.post("/order_details", async (req, res) => {
