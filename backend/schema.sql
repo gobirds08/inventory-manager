@@ -1,14 +1,10 @@
--- SQL DDL for Inventory Manager Database
--- PostgreSQL syntax
 
--- Table: Categories
 CREATE TABLE Categories (
     category_id SERIAL PRIMARY KEY,
     category_name VARCHAR(100) NOT NULL,
     description TEXT
 );
 
--- Table: Suppliers
 CREATE TABLE Suppliers (
     supplier_id SERIAL PRIMARY KEY,
     supplier_name VARCHAR(100) NOT NULL,
@@ -17,7 +13,6 @@ CREATE TABLE Suppliers (
     contact_phone VARCHAR(20)
 );
 
--- Table: Products
 CREATE TABLE Products (
     product_id SERIAL PRIMARY KEY,
     product_name VARCHAR(100) NOT NULL,
@@ -28,7 +23,6 @@ CREATE TABLE Products (
     description TEXT
 );
 
--- Table: Customers
 CREATE TABLE Customers (
     customer_id SERIAL PRIMARY KEY,
     customer_name VARCHAR(100),
@@ -36,7 +30,6 @@ CREATE TABLE Customers (
     contact_phone VARCHAR(20)
 );
 
--- Table: Orders
 CREATE TABLE Orders (
     order_id SERIAL PRIMARY KEY,
     customer_id INT REFERENCES Customers(customer_id) ON DELETE CASCADE,
@@ -44,7 +37,6 @@ CREATE TABLE Orders (
     total_amount DECIMAL(10, 2) NOT NULL CHECK (total_amount >= 0) DEFAULT 0
 );
 
--- Table: OrderDetails
 CREATE TABLE OrderDetails (
     order_detail_id SERIAL PRIMARY KEY,
     order_id INT REFERENCES Orders(order_id) ON DELETE CASCADE,
@@ -53,7 +45,6 @@ CREATE TABLE OrderDetails (
     price DECIMAL(10, 2) NOT NULL CHECK (price >= 0)
 );
 
--- Indexes to optimize performance
 CREATE INDEX idx_products_category_id ON Products(category_id);
 CREATE INDEX idx_products_supplier_id ON Products(supplier_id);
 CREATE INDEX idx_orders_customer_id ON Orders(customer_id);

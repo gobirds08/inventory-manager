@@ -1,10 +1,29 @@
 import express from "express";
 import { query } from "../db";
+import cors from 'cors';
 
 const app = express();
 const PORT = 3001;
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://frontend_placeholder'
+];
+
 app.use(express.json());
+
+const corsOptions: cors.CorsOptions = {
+  origin: (origin: any, callback: any) => {
+      // use 'origin &&' after testing locally
+      if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+      } else {
+          callback(new Error('Not allowed by CORS'));
+      }
+  }
+};
+
+app.use(cors(corsOptions));
 
 
 // Get Product
