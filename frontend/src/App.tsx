@@ -1,5 +1,6 @@
-import Button from "./components/button/Button"
+// import Button from "./components/button/Button"
 import NavBar from "./components/nav_bar/NavBar"
+import Products from "./pages/Products"
 
 
 function App() {
@@ -8,7 +9,8 @@ function App() {
     <>
       <NavBar />
       <div className="content">
-        <Button content="Hello World!"/>
+        {/* <Button content="Hello World!"/> */}
+        <Products />
       </div>
     </>
   )
