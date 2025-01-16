@@ -1,11 +1,15 @@
 import Button from "./components/button/Button"
+import NavBar from "./components/nav_bar/NavBar"
 
 
 function App() {
 
   return (
     <>
-      <Button content="Hello World!"/>
+      <NavBar />
+      <div className="content">
+        <Button content="Hello World!"/>
+      </div>
     </>
   )
 }
