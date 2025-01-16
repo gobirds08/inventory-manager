@@ -1,8 +1,13 @@
+import { Product } from "../../models/Product";
 
-function ProductView(){
+interface ProductProps{
+    product: Product;
+}
+
+function ProductView({product}: ProductProps){
     return (
     <div>
-        
+        <p>{product.name}</p>
     </div>)
 }
 

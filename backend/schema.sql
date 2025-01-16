@@ -20,7 +20,8 @@ CREATE TABLE Products (
     supplier_id INT NOT NULL REFERENCES Suppliers(supplier_id) NOT NULL ON DELETE SET NULL,
     quantity_in_stock INT NOT NULL CHECK (quantity_in_stock >= 0) DEFAULT 0,
     price_per_unit DECIMAL(10, 2) NOT NULL CHECK (price_per_unit >= 0) DEFAULT 0,
-    description TEXT
+    description TEXT,
+    image_url TEXT
 );
 
 CREATE TABLE Customers (
