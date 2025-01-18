@@ -10,7 +10,8 @@ function App() {
       <NavBar />
       <div className="content">
         {/* <Button content="Hello World!"/> */}
-        <Products />
+        {/* <Products /> */}
+        <Products/>
       </div>
     </>
   )

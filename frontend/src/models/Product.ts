@@ -8,3 +8,16 @@ export interface Product{
     description: string;
     image: string;
 }
+
+import book_img from "../assets/book_test.png"
+
+export const defaultProduct: Product = {
+    product_id: 0,
+    name: "Book",
+    category_id: 0,
+    supplier_id: 0,
+    quantity: 0,
+    unit_price: 10.99,
+    description: "",
+    image: book_img
+}
