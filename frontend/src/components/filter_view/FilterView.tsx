@@ -1,14 +1,18 @@
+import Button from "../button/Button";
 
 interface FilterProps{
     search: string;
+    handleToggle: () => void;
+    handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function FilterView({search}: FilterProps){
+function FilterView({search, handleToggle, handleInputChange}: FilterProps){
+
     return (
         <div className="container filter">
             <div className="container">
                 <label>Product</label>
-                <input type="search" placeholder={search}/>
+                <input type="search" value={search} onChange={handleInputChange} placeholder="Search"/>
             </div>
             <div className="container">
                 <label htmlFor="options">Category</label>
@@ -18,6 +22,7 @@ function FilterView({search}: FilterProps){
                     <option value="option2">Option 2</option>
                 </select>
             </div>
+            <Button action={handleToggle}>Submit</Button>
         </div>
     )
 }

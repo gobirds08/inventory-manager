@@ -1,15 +1,25 @@
 import FilterView from "../components/filter_view/FilterView";
 import ProductView from "../components/product_view/ProductView";
-import { defaultProduct } from "../models/Product";
-import { useState } from "react";
+import { defaultProduct, Product } from "../models/Product";
+import { useRef, useState } from "react";
 
 
 function Products(){
-    const [search, setSearch] = useState("Search");
+    const [filterToggle, setFilterToggle] = useState<boolean>(false);
+    const [search, setSearch] = useState<string>("");
+    const [products, setProducts] = useState<Product[]>([]);
+
+    const handleToggle = () => {
+        setFilterToggle((prevState) => !prevState);
+    }
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value);
+    };
 
     return (
         <>
-        <FilterView search={search}/>
+        <FilterView search={search} handleToggle={handleToggle} handleInputChange={handleInputChange}/>
         <div className="container">
             <ProductView product={defaultProduct} />
             <ProductView product={defaultProduct} />
