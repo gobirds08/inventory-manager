@@ -42,7 +42,7 @@ app.get("/product/:product_id", async (req, res) => {
 });
 
 app.get("/products", async (req, res) => {
-	const { search, category_id } = req.query;
+	const { search, category } = req.query;
 	try {
 		let q = `SELECT *
              FROM Products
@@ -50,8 +50,8 @@ app.get("/products", async (req, res) => {
 		if (search) {
 			q += ` AND product_name LIKE '%${search}%'`;
 		}
-		if (category_id) {
-			q += ` AND category_id = ${category_id}`;
+		if (category) {
+			q += ` AND category_name = ${category}`;
 		}
 		const result = await query(q);
 		res.json(result.rows);
@@ -74,16 +74,18 @@ app.post("/product", async (req, res) => {
 		supplier_id,
 		price_per_unit,
 		description,
+		image_url,
 	} = req.body;
 	try {
-		const q = `INSERT INTO Products (product_name, category_id, supplier_id, price_per_unit, description)
-               VALUES ($1, $2, $3, $4, $5)`;
+		const q = `INSERT INTO Products (product_name, category_id, supplier_id, price_per_unit, description, image_url)
+               VALUES ($1, $2, $3, $4, $5, $6)`;
 		await query(q, [
 			product_name,
 			category_id,
 			supplier_id,
 			price_per_unit,
 			description,
+			image_url,
 		]);
 
 		res.json("Success");

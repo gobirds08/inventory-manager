@@ -7,7 +7,7 @@ import fetchProducts from "../utilities/FetchData";
 function Products() {
 	const [filterToggle, setFilterToggle] = useState<boolean>(false);
 	const [search, setSearch] = useState<string>("");
-	const [category_id, setCategoryID] = useState<number | null>(null);
+	const [category, setCategory] = useState<string | null>(null);
 	const [products, setProducts] = useState<Product[]>([]);
 
 	const handleToggle = () => {
@@ -19,14 +19,14 @@ function Products() {
 	};
 
 	const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setCategoryID(parseInt(e.target.value));
+		setCategory(e.target.value);
 	};
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const products: Product[] = await fetchProducts({
 				search,
-				category_id: "",
+				category: "",
 			});
 			setProducts(products);
 		};
@@ -37,9 +37,10 @@ function Products() {
 		<>
 			<FilterView
 				search={search}
-				category_id={category_id}
+				category={category}
 				handleToggle={handleToggle}
 				handleSearchChange={handleSearchChange}
+				handleCategoryChange={handleCategoryChange}
 			/>
 			<div className="container">
 				{products.map((product) => (

@@ -1,18 +1,21 @@
 import { Product } from "../models/Product";
 
 interface FetchProductsProps {
-	search: string;
-	category_id: string;
+	search: string | null;
+	category: string | null;
 }
 
 export default async function fetchProducts({
 	search,
-	category_id,
+	category,
 }: FetchProductsProps): Promise<Product[]> {
 	try {
-		const response = await fetch(
-			`http://localhost:3001/products?search=${search}&category_id=${category_id}`
-		);
+		let url = `http://localhost:3001/products?search=${search}`;
+
+		if (category) {
+			url += `&category=${category}`;
+		}
+		const response = await fetch(url);
 		if (!response.ok) {
 			throw new Error("Failed to fetch products");
 		}
