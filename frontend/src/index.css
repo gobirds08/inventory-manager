@@ -1,93 +1,97 @@
-body, html {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Kanit", serif;
+body,
+html {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Kanit", serif;
 }
 
 .nav {
-  box-sizing: border-box;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: lightblue;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 1000;
-  padding: 1rem;
-  height: 80px
+	box-sizing: border-box;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background-color: lightblue;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	z-index: 1000;
+	padding: 1rem;
+	height: 80px;
 }
 
 .nav .logo {
-  height: 40px;
+	height: 40px;
 }
 
-
 .nav ul {
-  list-style: none;
-  display: flex;
-  margin: 0;
-  padding: 0;
-  border: black solid 2px;
+	list-style: none;
+	display: flex;
+	margin: 0;
+	padding: 0;
+	border: black solid 2px;
 }
 
 .nav li {
-  margin: 0px 25px;
+	margin: 0px 25px;
 }
 
-.content{
-  margin-top: 80px;
+.content {
+	margin-top: 80px;
 }
 
-.container{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: center;
+.container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: center;
 }
 
-.card{
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 20px;
-  padding: 10px;
-  width: 200px;
-  height: 250px;
-  border-radius: 10px;
-  box-shadow: 5px 5px 10px;
+.card {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 20px 20px;
+	padding: 10px;
+	width: 200px;
+	height: 250px;
+	border-radius: 10px;
+	box-shadow: 5px 5px 10px;
 }
 
-.product-info{
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  font-weight: bold;
-  align-items: center;
+.product-info {
+	display: flex;
+	justify-content: space-around;
+	width: 100%;
+	font-weight: bold;
+	align-items: center;
 }
 
-.product-photo{
-  height: 50%;
-  width: auto;
-  border-radius: 5px;
+.product-photo {
+	height: 50%;
+	width: auto;
+	border-radius: 5px;
 }
 
-.price-int{
-  font-size: large;
+.price-int {
+	font-size: large;
 }
 
-.filter{
-  box-sizing: border-box;
-  height: 60px;
-  border: black solid 1px;
-  padding: 10px;
-  gap: 40px;
+.filter {
+	box-sizing: border-box;
+	height: 60px;
+	border: black solid 1px;
+	padding: 10px;
+	gap: 40px;
 }
 
-label{
-  margin-right: 10px;
+label {
+	margin-right: 10px;
+}
+
+.close * {
+	margin: 0;
 }

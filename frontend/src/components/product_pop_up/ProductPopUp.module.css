@@ -7,5 +7,12 @@
 	display: flex;
 	width: 50%;
 	height: 90%;
-	border: black solid 2px;
+	flex-direction: column;
+	padding: 0% 1%;
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
