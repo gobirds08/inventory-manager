@@ -1,14 +1,16 @@
 import FilterView from "../components/filter_view/FilterView";
 import ProductView from "../components/product_view/ProductView";
 import { Product, defaultProduct } from "../models/Product";
+import Category from "../models/Category";
 import { useEffect, useState } from "react";
-import fetchProducts from "../utilities/FetchData";
+import { fetchProducts, fetchCategories } from "../utilities/FetchData";
 
 function Products() {
 	const [filterToggle, setFilterToggle] = useState<boolean>(false);
 	const [search, setSearch] = useState<string>("");
-	const [category, setCategory] = useState<string | null>(null);
+	const [category_id, setCategoryID] = useState<number>(0);
 	const [products, setProducts] = useState<Product[]>([]);
+	const [categories, setCategories] = useState<Category[]>([]);
 
 	const handleToggle = () => {
 		setFilterToggle((prevState) => !prevState);
@@ -19,32 +21,42 @@ function Products() {
 	};
 
 	const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setCategory(e.target.value);
+		console.log(e.target.value);
+		setCategoryID(parseInt(e.target.value));
 	};
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const products: Product[] = await fetchProducts({
 				search,
-				category: "",
+				category_id,
 			});
 			setProducts(products);
 		};
 		fetchData();
 	}, [filterToggle]);
 
+	useEffect(() => {
+		const fetchData = async () => {
+			const categories = await fetchCategories();
+			setCategories(categories);
+		};
+		fetchData();
+	}, []);
+
 	return (
 		<>
 			<FilterView
 				search={search}
-				category={category}
+				category={""}
+				categories={categories}
 				handleToggle={handleToggle}
 				handleSearchChange={handleSearchChange}
 				handleCategoryChange={handleCategoryChange}
 			/>
 			<div className="container">
 				{products.map((product) => (
-					<ProductView product={product} />
+					<ProductView key={product.product_id} product={product} />
 				))}
 				<ProductView product={defaultProduct} />
 				<ProductView product={defaultProduct} />

@@ -1,8 +1,10 @@
+import Category from "../../models/Category";
 import Button from "../button/Button";
 
 interface FilterProps {
 	search: string;
 	category: string | null;
+	categories: Category[];
 	handleToggle: () => void;
 	handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	handleCategoryChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -11,6 +13,7 @@ interface FilterProps {
 function FilterView({
 	search,
 	category,
+	categories,
 	handleToggle,
 	handleSearchChange,
 	handleCategoryChange,
@@ -33,11 +36,12 @@ function FilterView({
 					value={category?.toString()}
 					onChange={handleCategoryChange}
 				>
-					<option value="" disabled selected>
-						Select an option
-					</option>
-					<option value="option1">Option 1</option>
-					<option value="option2">Option 2</option>
+					<option value={0}>All</option>
+					{categories.map((category) => (
+						<option key={category.category_id} value={category.category_id}>
+							{category.category_name}
+						</option>
+					))}
 				</select>
 			</div>
 			<Button action={handleToggle}>Submit</Button>

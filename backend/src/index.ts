@@ -42,7 +42,7 @@ app.get("/product/:product_id", async (req, res) => {
 });
 
 app.get("/products", async (req, res) => {
-	const { search, category } = req.query;
+	const { search, category_id } = req.query;
 	try {
 		let q = `SELECT *
              FROM Products
@@ -50,8 +50,8 @@ app.get("/products", async (req, res) => {
 		if (search) {
 			q += ` AND product_name LIKE '%${search}%'`;
 		}
-		if (category) {
-			q += ` AND category_name = ${category}`;
+		if (category_id) {
+			q += ` AND category_id = ${category_id}`;
 		}
 		const result = await query(q);
 		res.json(result.rows);
