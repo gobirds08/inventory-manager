@@ -48,7 +48,7 @@ app.get("/products", async (req, res) => {
              FROM Products
              WHERE 1 = 1`;
 		if (search) {
-			q += ` AND product_name LIKE '%${search}%'`;
+			q += ` AND LOWER(product_name) LIKE LOWER('%${search}%')`;
 		}
 		if (category_id) {
 			q += ` AND category_id = ${category_id}`;

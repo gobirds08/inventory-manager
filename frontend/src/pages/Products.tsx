@@ -48,7 +48,7 @@ function Products() {
 		<>
 			<FilterView
 				search={search}
-				category={""}
+				category_id={category_id}
 				categories={categories}
 				handleToggle={handleToggle}
 				handleSearchChange={handleSearchChange}

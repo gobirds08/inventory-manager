@@ -3,7 +3,7 @@ import Button from "../button/Button";
 
 interface FilterProps {
 	search: string;
-	category: string | null;
+	category_id: number | null;
 	categories: Category[];
 	handleToggle: () => void;
 	handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -12,7 +12,7 @@ interface FilterProps {
 
 function FilterView({
 	search,
-	category,
+	category_id,
 	categories,
 	handleToggle,
 	handleSearchChange,
@@ -33,7 +33,7 @@ function FilterView({
 				<label htmlFor="options">Category</label>
 				<select
 					id="options"
-					value={category?.toString()}
+					value={category_id ?? 0}
 					onChange={handleCategoryChange}
 				>
 					<option value={0}>All</option>
