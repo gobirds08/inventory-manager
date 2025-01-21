@@ -1,0 +1,11 @@
+.outerBox {
+	height: 100%;
+}
+
+.content {
+	box-sizing: border-box;
+	display: flex;
+	width: 50%;
+	height: 90%;
+	border: black solid 2px;
+}

@@ -2,6 +2,7 @@ import { Product } from "../../models/Product";
 import Button from "../button/Button";
 import PopUp from "../pop-up/PopUp";
 import { useState } from "react";
+import ProductPopUp from "../product_pop_up/ProductPopUp";
 
 interface ProductProps {
 	product: Product;
@@ -33,9 +34,7 @@ function ProductView({ product }: ProductProps) {
 				</div>
 			</Button>
 			<PopUp show={popUpOpen} onClose={() => setPopUpOpen(false)}>
-				<div>
-					<h1>Test</h1>
-				</div>
+				<ProductPopUp product={product} />
 			</PopUp>
 		</>
 	);
