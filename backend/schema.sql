@@ -46,6 +46,14 @@ CREATE TABLE OrderDetails (
     price DECIMAL(10, 2) NOT NULL CHECK (price >= 0)
 );
 
+CREATE TABLE SupplierOrders (
+    supplier_order_id SERIAL PRIMARY KEY,
+    supplier_id INT NOT NULL REFERENCES Suppliers(supplier_id) ON DELETE CASCADE,
+    product_id INT NOT NULL REFERENCES Products(product_id) ON DELETE CASCADE,
+    order_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    quantity INT NOT NULL CHECK (quantity > 0)
+);
+
 CREATE INDEX idx_products_category_id ON Products(category_id);
 CREATE INDEX idx_products_supplier_id ON Products(supplier_id);
 CREATE INDEX idx_orders_customer_id ON Orders(customer_id);
