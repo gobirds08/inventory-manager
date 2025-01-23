@@ -1,4 +1,5 @@
 import { Product } from "../../models/Product";
+import Button from "../button/Button";
 import styles from "./ProductPopUp.module.css";
 
 interface ProductPopUpProps {
@@ -11,7 +12,7 @@ export default function ProductPopUp({ product }: ProductPopUpProps) {
 	return (
 		<div className={`container ${styles.outerBox}`}>
 			<div className={styles.content}>
-				<div className={styles.header}>
+				<div className={styles.separate}>
 					<h1>{product.product_name}</h1>
 					<span>Product ID: {product.product_id}</span>
 				</div>
@@ -21,8 +22,10 @@ export default function ProductPopUp({ product }: ProductPopUpProps) {
 						.{price_parts.length == 1 ? "00" : price_parts[1]}
 					</span>
 				</div>
-				<div>
+				<div className={`container ${styles.stockButton}`}>
 					<h4>Stock: {product.quantity_in_stock}</h4>
+					{/* action for button below will be to take to order page with product_id */}
+					<Button>Order More</Button>
 				</div>
 				<div className="close">
 					<h4>Product Description</h4>

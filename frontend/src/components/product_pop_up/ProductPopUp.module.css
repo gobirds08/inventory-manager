@@ -11,8 +11,12 @@
 	padding: 0% 1%;
 }
 
-.header {
+.separate {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+}
+
+.stockButton {
+	gap: 30px;
 }
