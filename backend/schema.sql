@@ -49,8 +49,13 @@ CREATE TABLE OrderDetails (
 CREATE TABLE SupplierOrders (
     supplier_order_id SERIAL PRIMARY KEY,
     supplier_id INT NOT NULL REFERENCES Suppliers(supplier_id) ON DELETE CASCADE,
+    order_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE SupplierOrderDetails (
+    supplier_order_detail_id SERIAL PRIMARY KEY,
+    supplier_order_id INT NOT NULL REFERENCES SupplierOrders(supplier_order_id) ON DELETE CASCADE,
     product_id INT NOT NULL REFERENCES Products(product_id) ON DELETE CASCADE,
-    order_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     quantity INT NOT NULL CHECK (quantity > 0)
 );
 
