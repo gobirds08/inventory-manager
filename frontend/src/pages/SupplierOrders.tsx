@@ -8,10 +8,12 @@ function SupplierOrders() {
 		<>
 			<h1>Supplier Orders</h1>
 			<div className="container"></div>
-			{orders.map((order) => (
-				// <OrderView key={order.supplier_order_id} order={order} />
-				<h1>{order.supplier_id}</h1>
-			))}
+			<div className="order-list">
+				{orders.map((order) => (
+					// <OrderView key={order.supplier_order_id} order={order} />
+					<h1>{order.supplier_id}</h1>
+				))}
+			</div>
 		</>
 	);
 }
