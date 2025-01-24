@@ -7,17 +7,17 @@ import SupplierOrders from "./pages/SupplierOrders";
 function App() {
 	return (
 		<>
-			<NavBar />
-			<div className="content">
-				<BrowserRouter>
+			<BrowserRouter>
+				<NavBar />
+				<div className="content">
 					<Routes>
 						<Route path="/products" element={<Products />} />
 						<Route path="/supplier_orders" element={<SupplierOrders />} />
 						<Route path="/" element={<Navigate to="/products" />} />
 						<Route path="*" element={<h1>404 - Page Not Found</h1>} />
 					</Routes>
-				</BrowserRouter>
-			</div>
+				</div>
+			</BrowserRouter>
 		</>
 	);
 }
