@@ -323,6 +323,20 @@ app.get("/supplier_orders", async (req, res) => {
 	}
 });
 
+// Add Supplier Order
+app.post("/supplier_order", async (req, res) => {
+	const { supplier_id, order_date } = req.body;
+	try {
+		const q = `INSERT INTO SupplierOrders (supplier_id, order_date)
+			   VALUES ($1, $2)`;
+		await query(q, [supplier_id, order_date]);
+		res.json("Success");
+	} catch (e) {
+		res.status(500).json({ error: "Internal Server Error" });
+		console.error(`Error adding supplier order`);
+	}
+});
+
 app.listen(PORT, () => {
 	console.log(`Server is running on http://localhost:${PORT}`);
 });
