@@ -310,6 +310,19 @@ app.post("/order_details", async (req, res) => {
 	}
 });
 
+// Get All Supplier Orders
+app.get("/supplier_orders", async (req, res) => {
+	try {
+		const q = `SELECT *
+			   FROM SupplierOrders`;
+		const result = await query(q);
+		res.json(result.rows);
+	} catch (e) {
+		res.status(500).json({ error: "Internal Server Error" });
+		console.error(`Error retrieving supplier orders`);
+	}
+});
+
 app.listen(PORT, () => {
 	console.log(`Server is running on http://localhost:${PORT}`);
 });
