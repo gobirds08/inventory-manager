@@ -20,7 +20,7 @@ function SupplierOrders() {
 
 	return (
 		<>
-			<h1>Supplier Orders</h1>
+			{/* maybe add some sort of filter or add button */}
 			<table>
 				<thead>
 					<tr>
@@ -29,7 +29,7 @@ function SupplierOrders() {
 						<th>Order Date</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody className="table-body">
 					{orders.map((order) => (
 						<tr key={order.supplier_order_id}>
 							<td>{order.supplier_order_id}</td>
