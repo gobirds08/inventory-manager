@@ -8,15 +8,25 @@ function SupplierOrders() {
 	return (
 		<>
 			<h1>Supplier Orders</h1>
-			<div className="container"></div>
-			<div className="order-list">
-				{orders.map((order) => (
-					<SupplierOrderView
-						key={order.supplier_order_id}
-						supplier_order={order}
-					/>
-				))}
-			</div>
+			<table>
+				<thead>
+					<tr>
+						<th>Order ID</th>
+						<th>Supplier ID</th>
+						<th>Order Date</th>
+					</tr>
+				</thead>
+				<tbody>
+					{orders.map((order) => (
+						<tr key={order.supplier_order_id}>
+							<td>{order.supplier_order_id}</td>
+							<td>{order.supplier_id}</td>
+							<td>{order.order_date.toISOString()}</td>
+						</tr>
+					))}
+					{/* maybe create some sort of delete or sort buttons */}
+				</tbody>
+			</table>
 		</>
 	);
 }
