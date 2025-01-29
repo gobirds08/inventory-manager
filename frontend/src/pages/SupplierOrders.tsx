@@ -2,9 +2,14 @@ import { SupplierOrder } from "../models/SupplierOrders";
 import { useEffect, useState } from "react";
 import { fetchSupplierOrders } from "../utilities/FetchData";
 import SupplierOrderView from "../components/supplier_order_view/SupplierOrderView";
+import PopUp from "../components/pop-up/PopUp";
 
 function SupplierOrders() {
 	const [orders, setOrders] = useState<SupplierOrder[]>([]);
+	const [popUpVisible, setPopUpVisible] = useState<boolean>(false);
+	const [selectedtOrder, setSelectedOrder] = useState<SupplierOrder | null>(
+		null
+	);
 
 	useEffect(() => {
 		const fetchOrders = async () => {
@@ -31,7 +36,13 @@ function SupplierOrders() {
 				</thead>
 				<tbody className="table-body">
 					{orders.map((order) => (
-						<tr key={order.supplier_order_id}>
+						<tr
+							key={order.supplier_order_id}
+							onClick={() => {
+								setPopUpVisible(true);
+								setSelectedOrder(order);
+							}}
+						>
 							<td>{order.supplier_order_id}</td>
 							<td>{order.supplier_id}</td>
 							<td>{order.order_date.toUTCString()}</td>
@@ -40,6 +51,9 @@ function SupplierOrders() {
 					{/* maybe create some sort of delete or sort buttons */}
 				</tbody>
 			</table>
+			<PopUp show={popUpVisible} onClose={() => setPopUpVisible(false)}>
+				<SupplierOrderView supplier_order={selectedtOrder!} />
+			</PopUp>
 		</>
 	);
 }
