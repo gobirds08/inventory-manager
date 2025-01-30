@@ -337,6 +337,21 @@ app.post("/supplier_order", async (req, res) => {
 	}
 });
 
+// Get All Supplier Order Details
+app.get("/supplier_orders/:supplier_order_id/products", async (req, res) => {
+	const supplier_order_id = parseInt(req.params.supplier_order_id);
+	try {
+		const q = `SELECT *
+			   FROM SupplierOrderDetails
+			   WHERE supplier_order_id = $1`;
+		const result = await query(q, [supplier_order_id]);
+		res.json(result.rows);
+	} catch (e) {
+		res.status(500).json({ error: "Internal Server Error" });
+		console.error(`Error retrieving supplier order details`);
+	}
+});
+
 app.listen(PORT, () => {
 	console.log(`Server is running on http://localhost:${PORT}`);
 });

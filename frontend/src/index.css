@@ -139,3 +139,8 @@ td {
 tbody tr:last-child td {
 	border-bottom: none; /* Removes the border from the last row */
 }
+
+.supply-order-header {
+	display: flex;
+	justify-content: space-between;
+}

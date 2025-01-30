@@ -1,7 +1,7 @@
 import { SupplierOrder } from "../models/SupplierOrders";
 import { useEffect, useState } from "react";
 import { fetchSupplierOrders } from "../utilities/FetchData";
-import SupplierOrderView from "../components/supplier_order_view/SupplierOrderView";
+import SupplierOrderPopUpView from "../components/supplier_order_view/SupplierOrderPopUpView";
 import PopUp from "../components/pop-up/PopUp";
 
 function SupplierOrders() {
@@ -52,7 +52,7 @@ function SupplierOrders() {
 				</tbody>
 			</table>
 			<PopUp show={popUpVisible} onClose={() => setPopUpVisible(false)}>
-				<SupplierOrderView supplier_order={selectedtOrder!} />
+				<SupplierOrderPopUpView supplier_order={selectedtOrder!} />
 			</PopUp>
 		</>
 	);

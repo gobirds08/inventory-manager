@@ -1,6 +1,7 @@
 import { Product } from "../models/Product";
 import Category from "../models/Category";
 import { SupplierOrder } from "../models/SupplierOrders";
+import { SupplierOrderDetail } from "../models/SupplierOrderDetails";
 
 interface FetchProductsProps {
 	search: string | null;
@@ -54,6 +55,27 @@ export async function fetchSupplierOrders(): Promise<SupplierOrder[]> {
 		const response = await fetch("http://localhost:3001/supplier_orders");
 		if (!response.ok) {
 			throw new Error("Failed to fetch supplier orders");
+		}
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		if (error instanceof Error) {
+			throw new Error(error.message);
+		} else {
+			throw new Error("An unknown error occurred");
+		}
+	}
+}
+
+export async function fetchSupplyOrderDetailsFromSupplierOrderID(
+	supplier_order_id: number
+): Promise<SupplierOrderDetail[]> {
+	try {
+		const response = await fetch(
+			`http://localhost:3001/supplier_orders/${supplier_order_id}/products`
+		);
+		if (!response.ok) {
+			throw new Error("Failed to fetch supplier order details");
 		}
 		const data = await response.json();
 		return data;
