@@ -33,7 +33,10 @@ app.get("/product/:product_id", async (req, res) => {
                FROM Products
                WHERE product_id = $1`;
 		const result = await query(q, [product_id]);
-		res.json(result.rows);
+		if (result.rows.length === 0) {
+			res.status(404).json({ error: "Product Not Found" });
+		}
+		res.json(result.rows[0]);
 	} catch (e) {
 		res.status(500).json({ error: "Internal Server Error" });
 		console.error(`Error retrieving product: ${product_id}`);

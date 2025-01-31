@@ -11,7 +11,7 @@ interface PopUpCardBarProps {
 function PopUpCardBar({ supplier_order_details }: PopUpCardBarProps) {
 	const [products, setProducts] = useState<Product[]>([]);
 	const [firstProductIndex, setFirstProductIndex] = useState<number>(0);
-	const numProductsToShow = 5;
+	const numProductsToShow = 2;
 
 	function handleArrowClick(left: boolean) {
 		if (left) {
@@ -41,11 +41,11 @@ function PopUpCardBar({ supplier_order_details }: PopUpCardBarProps) {
 	}, [supplier_order_details]);
 
 	return (
-		<div className="container">
+		<div className="flex-center">
 			<button className="arrow-left" onClick={() => handleArrowClick(true)}>
 				&#8592; Left
 			</button>
-			<div className="container">
+			<div className="flex-center">
 				{products.length === 0 ? (
 					<p>No products available</p>
 				) : (

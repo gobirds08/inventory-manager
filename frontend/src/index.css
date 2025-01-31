@@ -144,3 +144,19 @@ tbody tr:last-child td {
 	display: flex;
 	justify-content: space-between;
 }
+
+.flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.space-between {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.most-height {
+	height: 85%;
+}

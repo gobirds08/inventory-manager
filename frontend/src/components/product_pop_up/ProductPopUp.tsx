@@ -27,7 +27,7 @@ export default function ProductPopUp({ product }: ProductPopUpProps) {
 					{/* action for button below will be to take to order page with product_id */}
 					<Button>Order More</Button>
 				</div>
-				<div className="close">
+				<div className={styles.close}>
 					<h4>Product Description</h4>
 					<p>{product.description}</p>
 				</div>
