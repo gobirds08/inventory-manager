@@ -21,17 +21,16 @@ function Products() {
 	};
 
 	const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		console.log(e.target.value);
 		setCategoryID(parseInt(e.target.value));
 	};
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const products: Product[] = await fetchProducts({
+			const temp_products: Product[] = await fetchProducts({
 				search,
 				category_id,
 			});
-			setProducts(products);
+			setProducts(temp_products);
 		};
 		fetchData();
 	}, [filterToggle]);

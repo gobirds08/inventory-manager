@@ -10,8 +10,12 @@ interface ProductProps {
 
 function ProductView({ product }: ProductProps) {
 	const [popUpOpen, setPopUpOpen] = useState<boolean>(false);
+	console.log("Product data:", product);
+	console.log("Product price:", product.price_per_unit);
 
-	const price_parts: string[] = product.price_per_unit.toString().split(".");
+	const price_parts: string[] = (product.price_per_unit || "0.00")
+		.toString()
+		.split(".");
 	return (
 		<>
 			<Button classes="card" action={() => setPopUpOpen(true)}>

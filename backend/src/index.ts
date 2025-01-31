@@ -337,6 +337,20 @@ app.post("/supplier_order", async (req, res) => {
 	}
 });
 
+// Add Supplier Order Details
+app.post("/supplier_order_details", async (req, res) => {
+	const { supplier_order_id, product_id, quantity } = req.body;
+	try {
+		const q = `INSERT INTO SupplierOrderDetails (supplier_order_id, product_id, quantity)
+			   VALUES ($1, $2, $3)`;
+		await query(q, [supplier_order_id, product_id, quantity]);
+		res.json("Success");
+	} catch (e) {
+		res.status(500).json({ error: "Internal Server Error" });
+		console.error(`Error adding supplier order detail`);
+	}
+});
+
 // Get All Supplier Order Details
 app.get("/supplier_orders/:supplier_order_id/products", async (req, res) => {
 	const supplier_order_id = parseInt(req.params.supplier_order_id);

@@ -87,3 +87,20 @@ export async function fetchSupplyOrderDetailsFromSupplierOrderID(
 		}
 	}
 }
+
+export async function fetchProductByID(product_id: number): Promise<Product> {
+	try {
+		const response = await fetch(`http://localhost:3001/product/${product_id}`);
+		if (!response.ok) {
+			throw new Error("Failed to fetch product");
+		}
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		if (error instanceof Error) {
+			throw new Error(error.message);
+		} else {
+			throw new Error("An unknown error occurred");
+		}
+	}
+}
