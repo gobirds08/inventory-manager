@@ -15,12 +15,15 @@ function PopUpCardBar({ supplier_order_details }: PopUpCardBarProps) {
 
 	function handleArrowClick(left: boolean) {
 		if (left) {
-			if (firstProductIndex === 0) {
+			if (firstProductIndex === 0 || products.length <= numProductsToShow) {
 				return;
 			}
 			setFirstProductIndex(firstProductIndex - 1);
 		} else {
-			if (firstProductIndex === products.length - 1) {
+			if (
+				firstProductIndex === products.length - 1 ||
+				products.length <= numProductsToShow
+			) {
 				return;
 			}
 			setFirstProductIndex(firstProductIndex + 1);
@@ -42,9 +45,11 @@ function PopUpCardBar({ supplier_order_details }: PopUpCardBarProps) {
 
 	return (
 		<div className="flex-center">
-			<button className="arrow-left" onClick={() => handleArrowClick(true)}>
-				&#8592; Left
-			</button>
+			{products.length > numProductsToShow && firstProductIndex != 0 && (
+				<button className="arrow-left" onClick={() => handleArrowClick(true)}>
+					&#8592; Left
+				</button>
+			)}
 			<div className="flex-center">
 				{products.length === 0 ? (
 					<p>No products available</p>
@@ -61,9 +66,15 @@ function PopUpCardBar({ supplier_order_details }: PopUpCardBarProps) {
 						})
 				)}
 			</div>
-			<button className="arrow-right" onClick={() => handleArrowClick(false)}>
-				Right &#8594;
-			</button>
+			{products.length > numProductsToShow &&
+				firstProductIndex != products.length - 1 && (
+					<button
+						className="arrow-right"
+						onClick={() => handleArrowClick(false)}
+					>
+						Right &#8594;
+					</button>
+				)}
 		</div>
 	);
 }
