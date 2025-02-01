@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { fetchSupplierOrders } from "../utilities/FetchData";
 import SupplierOrderPopUpView from "../components/supplier_order_view/SupplierOrderPopUpView";
 import PopUp from "../components/pop-up/PopUp";
+import SupplyOrderCommands from "../components/SupplyOrderCommands/SupplyOrderCommands";
 
 function SupplierOrders() {
 	const [orders, setOrders] = useState<SupplierOrder[]>([]);
@@ -25,7 +26,7 @@ function SupplierOrders() {
 
 	return (
 		<>
-			{/* maybe add some sort of filter or add button */}
+			<SupplyOrderCommands />
 			<table>
 				<thead>
 					<tr>
