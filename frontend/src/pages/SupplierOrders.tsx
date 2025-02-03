@@ -1,11 +1,22 @@
 import { SupplierOrder } from "../models/SupplierOrders";
 import { useEffect, useState } from "react";
-import { fetchSupplierOrders } from "../utilities/FetchData";
+import { useLocation } from "react-router-dom";
+import {
+	fetchSupplierOrders,
+	createSupplierOrder,
+} from "../utilities/FetchData";
 import SupplierOrderPopUpView from "../components/supplier_order_view/SupplierOrderPopUpView";
 import PopUp from "../components/pop-up/PopUp";
 import SupplyOrderCommands from "../components/SupplyOrderCommands/SupplyOrderCommands";
 
 function SupplierOrders() {
+	const location = useLocation();
+	const queryParams = new URLSearchParams(location.search);
+	const product_id = queryParams.get("product_id");
+	const supplier_id = queryParams.get("supplier_id");
+	console.log(product_id);
+	console.log(supplier_id);
+
 	const [orders, setOrders] = useState<SupplierOrder[]>([]);
 	const [popUpVisible, setPopUpVisible] = useState<boolean>(false);
 	const [selectedtOrder, setSelectedOrder] = useState<SupplierOrder | null>(
@@ -23,6 +34,39 @@ function SupplierOrders() {
 		};
 		fetchOrders();
 	}, []);
+
+	useEffect(() => {
+		if (product_id && supplier_id) {
+			const existingOrder: SupplierOrder | undefined = orders.find(
+				(order) => order.supplier_id === parseInt(supplier_id) && !order.ordered
+			);
+			if (existingOrder) {
+				// console.log("Order already exists");
+				// console.log(existingOrder);
+				const updateOrder: SupplierOrder = {
+					...existingOrder,
+					order_date: new Date(existingOrder.order_date),
+				};
+				setSelectedOrder(updateOrder);
+				setPopUpVisible(true);
+			} else {
+				const createOrder = async () => {
+					// console.log("Creating order");
+					const newOrder: SupplierOrder = await createSupplierOrder(
+						parseInt(supplier_id)
+					);
+					// console.log(newOrder);
+					const updateOrder: SupplierOrder = {
+						...newOrder,
+						order_date: new Date(newOrder.order_date),
+					};
+					setSelectedOrder(updateOrder);
+					setPopUpVisible(true);
+				};
+				createOrder();
+			}
+		}
+	}, [orders, product_id, supplier_id]);
 
 	return (
 		<>
@@ -53,7 +97,10 @@ function SupplierOrders() {
 				</tbody>
 			</table>
 			<PopUp show={popUpVisible} onClose={() => setPopUpVisible(false)}>
-				<SupplierOrderPopUpView supplier_order={selectedtOrder!} />
+				<SupplierOrderPopUpView
+					supplier_order={selectedtOrder!}
+					product_id={product_id ? parseInt(product_id) : null}
+				/>
 			</PopUp>
 		</>
 	);

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Product } from "../../models/Product";
 import Button from "../button/Button";
 import styles from "./ProductPopUp.module.css";
@@ -8,6 +9,7 @@ interface ProductPopUpProps {
 
 export default function ProductPopUp({ product }: ProductPopUpProps) {
 	const price_parts: string[] = product.price_per_unit.toString().split(".");
+	const navigate = useNavigate();
 
 	return (
 		<div className={`container ${styles.outerBox}`}>
@@ -25,7 +27,15 @@ export default function ProductPopUp({ product }: ProductPopUpProps) {
 				<div className={`container ${styles.stockButton}`}>
 					<h4>Stock: {product.quantity_in_stock}</h4>
 					{/* action for button below will be to take to order page with product_id */}
-					<Button>Order More</Button>
+					<Button
+						action={() =>
+							navigate(
+								`/supplier_orders?product_id=${product.product_id}&supplier_id=${product.supplier_id}`
+							)
+						}
+					>
+						Order More
+					</Button>
 				</div>
 				<div className={styles.close}>
 					<h4>Product Description</h4>

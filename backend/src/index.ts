@@ -331,9 +331,10 @@ app.post("/supplier_order", async (req, res) => {
 	const { supplier_id, order_date } = req.body;
 	try {
 		const q = `INSERT INTO SupplierOrders (supplier_id, order_date)
-			   VALUES ($1, $2)`;
-		await query(q, [supplier_id, order_date]);
-		res.json("Success");
+			   VALUES ($1, $2)
+			   RETURNING *`;
+		const result = await query(q, [supplier_id, order_date]);
+		res.json(result.rows[0]);
 	} catch (e) {
 		res.status(500).json({ error: "Internal Server Error" });
 		console.error(`Error adding supplier order`);

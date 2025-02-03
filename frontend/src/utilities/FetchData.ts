@@ -130,3 +130,55 @@ export async function updateSupplierOrderStatus(
 		}
 	}
 }
+
+export async function createSupplierOrder(
+	supplier_id: number
+): Promise<SupplierOrder> {
+	try {
+		const response = await fetch("http://localhost:3001/supplier_order", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ supplier_id, order_date: new Date() }),
+		});
+		if (!response.ok) {
+			throw new Error("Failed to create supplier order");
+		}
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		if (error instanceof Error) {
+			throw new Error(error.message);
+		} else {
+			throw new Error("An unknown error occurred");
+		}
+	}
+}
+
+export async function addProductToSupplierOrder(
+	supplier_order_id: number,
+	product_id: number
+): Promise<void> {
+	try {
+		const response = await fetch(
+			"http://localhost:3001/supplier_order_details",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ supplier_order_id, product_id, quantity: 1 }),
+			}
+		);
+		if (!response.ok) {
+			throw new Error("Failed to add product to supplier order");
+		}
+	} catch (error) {
+		if (error instanceof Error) {
+			throw new Error(error.message);
+		} else {
+			throw new Error("An unknown error occurred");
+		}
+	}
+}
