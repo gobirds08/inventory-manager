@@ -104,3 +104,29 @@ export async function fetchProductByID(product_id: number): Promise<Product> {
 		}
 	}
 }
+
+export async function updateSupplierOrderStatus(
+	supplier_order_id: number
+): Promise<void> {
+	try {
+		const response = await fetch(
+			`http://localhost:3001/supplier_order/status/${supplier_order_id}`,
+			{
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ ordered: true }),
+			}
+		);
+		if (!response.ok) {
+			throw new Error("Failed to update supplier order status");
+		}
+	} catch (error) {
+		if (error instanceof Error) {
+			throw new Error(error.message);
+		} else {
+			throw new Error("An unknown error occurred");
+		}
+	}
+}

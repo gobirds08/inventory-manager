@@ -340,6 +340,21 @@ app.post("/supplier_order", async (req, res) => {
 	}
 });
 
+// Update Supplier Order Status
+app.put("/supplier_order/status/:supplier_order_id", async (req, res) => {
+	const supplier_order_id = parseInt(req.params.supplier_order_id);
+	try {
+		const q = `UPDATE SupplierOrders
+			   SET ordered = TRUE
+			   WHERE supplier_order_id = $1`;
+		await query(q, [supplier_order_id]);
+		res.json("Success");
+	} catch (e) {
+		res.status(500).json({ error: "Internal Server Error" });
+		console.error(`Error updating supplier order status`);
+	}
+});
+
 // Add Supplier Order Details
 app.post("/supplier_order_details", async (req, res) => {
 	const { supplier_order_id, product_id, quantity } = req.body;
