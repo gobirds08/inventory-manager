@@ -41,8 +41,6 @@ function SupplierOrders() {
 				(order) => order.supplier_id === parseInt(supplier_id) && !order.ordered
 			);
 			if (existingOrder) {
-				// console.log("Order already exists");
-				// console.log(existingOrder);
 				const updateOrder: SupplierOrder = {
 					...existingOrder,
 					order_date: new Date(existingOrder.order_date),
@@ -51,11 +49,9 @@ function SupplierOrders() {
 				setPopUpVisible(true);
 			} else {
 				const createOrder = async () => {
-					// console.log("Creating order");
 					const newOrder: SupplierOrder = await createSupplierOrder(
 						parseInt(supplier_id)
 					);
-					// console.log(newOrder);
 					const updateOrder: SupplierOrder = {
 						...newOrder,
 						order_date: new Date(newOrder.order_date),
