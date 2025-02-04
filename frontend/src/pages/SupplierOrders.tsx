@@ -1,15 +1,20 @@
 import { SupplierOrder } from "../models/SupplierOrders";
 import { useEffect, useState } from "react";
 import { fetchSupplierOrders } from "../utilities/FetchData";
+import { useLocation } from "react-router-dom";
 import SupplierOrderPopUpView from "../components/supplier_order_view/SupplierOrderPopUpView";
 import PopUp from "../components/pop-up/PopUp";
 import SupplyOrderCommands from "../components/SupplyOrderCommands/SupplyOrderCommands";
 
 function SupplierOrders() {
+	const location = useLocation();
+	const { order } = location.state || {};
 	const [orders, setOrders] = useState<SupplierOrder[]>([]);
-	const [popUpVisible, setPopUpVisible] = useState<boolean>(false);
+	const [popUpVisible, setPopUpVisible] = useState<boolean>(
+		order === undefined ? false : true
+	);
 	const [selectedtOrder, setSelectedOrder] = useState<SupplierOrder | null>(
-		null
+		order === undefined ? null : order
 	);
 
 	useEffect(() => {

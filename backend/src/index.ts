@@ -326,6 +326,21 @@ app.get("/supplier_orders", async (req, res) => {
 	}
 });
 
+// Get Supplier Order From Supplier ID And Not Ordered
+app.get("/supplier_orders/:supplier_id/not_ordered", async (req, res) => {
+	const supplier_id = parseInt(req.params.supplier_id);
+	try {
+		const q = `SELECT *
+			   FROM SupplierOrders
+			   WHERE supplier_id = $1 AND ordered = FALSE`;
+		const result = await query(q, [supplier_id]);
+		res.json(result.rows);
+	} catch (e) {
+		res.status(500).json({ error: "Internal Server Error" });
+		console.error(`Error retrieving supplier orders`);
+	}
+});
+
 // Add Supplier Order
 app.post("/supplier_order", async (req, res) => {
 	const { supplier_id, order_date } = req.body;
@@ -335,6 +350,7 @@ app.post("/supplier_order", async (req, res) => {
 			   RETURNING *`;
 		const result = await query(q, [supplier_id, order_date]);
 		res.json(result.rows[0]);
+		//Returns SupplierOrder Object
 	} catch (e) {
 		res.status(500).json({ error: "Internal Server Error" });
 		console.error(`Error adding supplier order`);
