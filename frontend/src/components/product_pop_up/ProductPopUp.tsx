@@ -26,14 +26,7 @@ export default function ProductPopUp({ product }: ProductPopUpProps) {
 				</div>
 				<div className={`container ${styles.stockButton}`}>
 					<h4>Stock: {product.quantity_in_stock}</h4>
-					{/* action for button below will be to take to order page with product_id */}
-					<Button
-						action={() =>
-							navigate(
-								`/supplier_orders?product_id=${product.product_id}&supplier_id=${product.supplier_id}`
-							)
-						}
-					>
+					<Button action={() => navigate(`/supplier_orders`)}>
 						Order More
 					</Button>
 				</div>
