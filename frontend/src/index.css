@@ -161,3 +161,37 @@ tbody tr:last-child td {
 .most-height {
 	height: 85%;
 }
+
+.product-slider {
+	width: 100%;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	position: relative;
+}
+
+.product-list {
+	display: flex;
+	gap: 20px;
+	transition: transform 0.3s ease-in-out;
+}
+
+.product-list.left {
+	transform: translateX(-100%);
+}
+
+.product-list.right {
+	transform: translateX(100%);
+}
+
+.arrow {
+	border-radius: 10px;
+	padding: 10px 10px;
+	border: none;
+	font-size: x-large;
+}
+
+.arrow:hover {
+	background-color: lightblue;
+	cursor: pointer;
+}

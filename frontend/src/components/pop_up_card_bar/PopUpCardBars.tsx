@@ -11,22 +11,40 @@ interface PopUpCardBarProps {
 function PopUpCardBar({ supplier_order_details }: PopUpCardBarProps) {
 	const [products, setProducts] = useState<Product[]>([]);
 	const [firstProductIndex, setFirstProductIndex] = useState<number>(0);
+	const [isSliding, setIsSliding] = useState(false);
+	const [slideDirection, setSlideDirection] = useState<"left" | "right" | "">(
+		""
+	);
 	const numProductsToShow = 2;
 
 	function handleArrowClick(left: boolean) {
+		if (isSliding) return;
+
 		if (left) {
 			if (firstProductIndex === 0 || products.length <= numProductsToShow) {
 				return;
 			}
-			setFirstProductIndex(firstProductIndex - 1);
+			setSlideDirection("right");
+			setIsSliding(true);
+
+			setTimeout(() => {
+				setFirstProductIndex(firstProductIndex - 1);
+				setIsSliding(false);
+			}, 300);
 		} else {
 			if (
-				firstProductIndex === products.length - 1 ||
+				firstProductIndex === products.length - numProductsToShow ||
 				products.length <= numProductsToShow
 			) {
 				return;
 			}
-			setFirstProductIndex(firstProductIndex + 1);
+			setSlideDirection("left");
+			setIsSliding(true);
+
+			setTimeout(() => {
+				setFirstProductIndex(firstProductIndex + 1);
+				setIsSliding(false);
+			}, 300);
 		}
 	}
 
@@ -46,33 +64,32 @@ function PopUpCardBar({ supplier_order_details }: PopUpCardBarProps) {
 	return (
 		<div className="flex-center">
 			{products.length > numProductsToShow && firstProductIndex != 0 && (
-				<button className="arrow-left" onClick={() => handleArrowClick(true)}>
-					&#8592; Left
+				<button className="arrow" onClick={() => handleArrowClick(true)}>
+					&#8592;
 				</button>
 			)}
-			<div className="flex-center">
-				{products.length === 0 ? (
-					<p>No products available</p>
-				) : (
-					products
-						.slice(firstProductIndex, firstProductIndex + numProductsToShow)
-						.map((product, index) => {
-							return (
-								<ProductView
-									key={`${product.product_id}-${index}`}
-									product={product}
-								/>
-							);
-						})
-				)}
+			<div className="flex-center product-slider">
+				<div className={`product-list ${isSliding ? slideDirection : ""}`}>
+					{products.length === 0 ? (
+						<p>No products available</p>
+					) : (
+						products
+							.slice(firstProductIndex, firstProductIndex + numProductsToShow)
+							.map((product, index) => {
+								return (
+									<ProductView
+										key={`${product.product_id}-${index}`}
+										product={product}
+									/>
+								);
+							})
+					)}
+				</div>
 			</div>
 			{products.length > numProductsToShow &&
 				firstProductIndex != products.length - numProductsToShow && (
-					<button
-						className="arrow-right"
-						onClick={() => handleArrowClick(false)}
-					>
-						Right &#8594;
+					<button className="arrow" onClick={() => handleArrowClick(false)}>
+						&#8594;
 					</button>
 				)}
 		</div>
