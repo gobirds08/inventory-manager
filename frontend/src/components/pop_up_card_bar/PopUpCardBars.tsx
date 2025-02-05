@@ -67,7 +67,7 @@ function PopUpCardBar({ supplier_order_details }: PopUpCardBarProps) {
 				)}
 			</div>
 			{products.length > numProductsToShow &&
-				firstProductIndex != products.length - 1 && (
+				firstProductIndex != products.length - numProductsToShow && (
 					<button
 						className="arrow-right"
 						onClick={() => handleArrowClick(false)}

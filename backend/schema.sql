@@ -49,7 +49,7 @@ CREATE TABLE OrderDetails (
 CREATE TABLE SupplierOrders (
     supplier_order_id SERIAL PRIMARY KEY,
     supplier_id INT NOT NULL REFERENCES Suppliers(supplier_id) ON DELETE CASCADE,
-    order_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    order_date TIMESTAMP,
     ordered BOOLEAN NOT NULL DEFAULT FALSE
 );
 
