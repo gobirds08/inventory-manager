@@ -203,3 +203,33 @@ export async function getSupplierOrdersFromSupplierIDAndNotOrdered(
 		}
 	}
 }
+
+export async function updateQuantityOfSupplierOrderDetail(
+	positiveChange: number,
+	supplier_order_detail_id: number
+): Promise<void> {
+	if (!Number.isInteger(positiveChange)) {
+		return;
+	}
+	try {
+		const response = await fetch(
+			`http://localhost:3001/supplier_order_details/update_quantity`,
+			{
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ positiveChange, supplier_order_detail_id }),
+			}
+		);
+		if (!response.ok) {
+			throw new Error("Failed to add product to supplier order");
+		}
+	} catch (error) {
+		if (error instanceof Error) {
+			throw new Error(error.message);
+		} else {
+			throw new Error("An unknown error occurred");
+		}
+	}
+}

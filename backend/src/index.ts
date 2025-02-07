@@ -401,6 +401,21 @@ app.get("/supplier_orders/:supplier_order_id/products", async (req, res) => {
 	}
 });
 
+// Update Supplier Order Quantity
+app.put("/supplier_order_details/update_quantity", async (req, res) => {
+	const { quantity_change, supplier_order_detail_id } = req.body;
+	try {
+		const q = `UPDATE supplier_order_details
+				   SET quantity = quantity + $1
+				   WHERE supplier_order_detail_id = $2`;
+		await query(q, [quantity_change, supplier_order_detail_id]);
+		res.json("Success");
+	} catch (e) {
+		res.status(500).json({ error: "Internal Server Error" });
+		console.error(`Error updating supplier order details quantity`);
+	}
+});
+
 app.listen(PORT, () => {
 	console.log(`Server is running on http://localhost:${PORT}`);
 });

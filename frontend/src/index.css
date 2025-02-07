@@ -195,3 +195,7 @@ tbody tr:last-child td {
 	background-color: lightblue;
 	cursor: pointer;
 }
+
+#quantity {
+	width: 10%;
+}

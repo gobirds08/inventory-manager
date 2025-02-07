@@ -6,8 +6,11 @@ import { SupplierOrder } from "../../models/SupplierOrders";
 import {
 	addProductToSupplierOrder,
 	createSupplierOrder,
+	fetchSupplyOrderDetailsFromSupplierOrderID,
 	getSupplierOrdersFromSupplierIDAndNotOrdered,
+	updateQuantityOfSupplierOrderDetail,
 } from "../../utilities/FetchData";
+import React, { useState } from "react";
 
 interface ProductPopUpProps {
 	product: Product;
@@ -16,6 +19,8 @@ interface ProductPopUpProps {
 export default function ProductPopUp({ product }: ProductPopUpProps) {
 	const price_parts: string[] = product.price_per_unit.toString().split(".");
 	const navigate = useNavigate();
+
+	const [quantity, setQuanity] = useState<number>(1);
 
 	const handleOrderPerProduct = async () => {
 		try {
@@ -30,10 +35,25 @@ export default function ProductPopUp({ product }: ProductPopUpProps) {
 			} else {
 				finalOrder = { ...order[0], order_date: new Date(order[0].order_date) };
 			}
-			await addProductToSupplierOrder(
-				finalOrder.supplier_order_id,
-				product.product_id
+			const finalOrderDetails =
+				await fetchSupplyOrderDetailsFromSupplierOrderID(
+					finalOrder.supplier_order_id
+				);
+			const existingOrderDetail = finalOrderDetails.find(
+				(orderDetail) => orderDetail.product_id === product.product_id
 			);
+
+			if (existingOrderDetail === undefined) {
+				await addProductToSupplierOrder(
+					finalOrder.supplier_order_id,
+					product.product_id
+				);
+			} else {
+				await updateQuantityOfSupplierOrderDetail(
+					existingOrderDetail.supplier_order_detail_id,
+					1
+				);
+			}
 			navigate(`/supplier_orders`, {
 				state: {
 					order: finalOrder,
@@ -41,6 +61,13 @@ export default function ProductPopUp({ product }: ProductPopUpProps) {
 			});
 		} catch (e) {
 			console.log(e);
+		}
+	};
+
+	const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const value: number = parseInt(event.target.value);
+		if (value >= 1) {
+			setQuanity(value);
 		}
 	};
 
@@ -59,6 +86,12 @@ export default function ProductPopUp({ product }: ProductPopUpProps) {
 				</div>
 				<div className={`container ${styles.stockButton}`}>
 					<h4>Stock: {product.quantity_in_stock}</h4>
+					<input
+						type="number"
+						id="quantity"
+						value={quantity}
+						onChange={handleQuantityChange}
+					/>
 					<Button action={() => handleOrderPerProduct()}>Order More</Button>
 				</div>
 				<div className={styles.close}>
