@@ -158,7 +158,8 @@ export async function createSupplierOrder(
 
 export async function addProductToSupplierOrder(
 	supplier_order_id: number,
-	product_id: number
+	product_id: number,
+	quantity: number
 ): Promise<void> {
 	try {
 		const response = await fetch(
@@ -168,7 +169,7 @@ export async function addProductToSupplierOrder(
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({ supplier_order_id, product_id, quantity: 1 }),
+				body: JSON.stringify({ supplier_order_id, product_id, quantity }),
 			}
 		);
 		if (!response.ok) {

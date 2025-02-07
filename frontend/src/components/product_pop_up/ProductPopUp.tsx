@@ -46,12 +46,13 @@ export default function ProductPopUp({ product }: ProductPopUpProps) {
 			if (existingOrderDetail === undefined) {
 				await addProductToSupplierOrder(
 					finalOrder.supplier_order_id,
-					product.product_id
+					product.product_id,
+					quantity
 				);
 			} else {
 				await updateQuantityOfSupplierOrderDetail(
 					existingOrderDetail.supplier_order_detail_id,
-					1
+					quantity
 				);
 			}
 			navigate(`/supplier_orders`, {
