@@ -30,7 +30,6 @@ html {
 	display: flex;
 	margin: 0;
 	padding: 0;
-	border: black solid 2px;
 }
 
 .nav li {
@@ -198,4 +197,47 @@ tbody tr:last-child td {
 
 #quantity {
 	width: 10%;
+}
+
+body,
+html {
+	height: 100vh;
+	margin: 0;
+}
+
+.login-container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: lightblue;
+	height: 60vh;
+	width: 50vh;
+	border-radius: 5vh;
+	box-shadow: #9a98b6 0px 0px 10px;
+}
+
+.login-form {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+}
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 1rem;
+}
+
+input {
+	margin-top: 0.2rem;
+	padding: 0.5rem;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	width: 100%;
 }
